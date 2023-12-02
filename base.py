@@ -19,6 +19,6 @@ f = open('.env')
 # a dictionary
 env = json.load(f)
 session_cookie = env['session']
-year = env['year']
+year = 2023
 day = int(sys.argv[1]) if len(sys.argv) > 1 else today()
 day_str = f"{day:02}"
