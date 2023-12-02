@@ -4,7 +4,7 @@ import os
 from base import solutions_dir, day_str
 
 with open(os.path.join(solutions_dir, day_str, 'README.md')) as f:
-    problem_name = f.readline()[7:-5]
+    problem_name = f.readline()[6:-5]
 
 with open('README.md', 'r+') as readme:
     input = readme.read()

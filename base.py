@@ -6,10 +6,10 @@ advent_of_code_base_url = 'https://adventofcode.com'
 solutions_dir = 'solutions'
 
 
-def get_next_day() -> int:
+def today() -> int:
     days = [int(x) for x in os.listdir(solutions_dir)]
     days.append(0)
-    return sorted(days)[-1] + 1
+    return sorted(days)[-1]
 
 
 # Opening JSON file
@@ -20,5 +20,5 @@ f = open('.env')
 env = json.load(f)
 session_cookie = env['session']
 year = env['year']
-day = int(sys.argv[1]) if len(sys.argv) > 1 else get_next_day()
+day = int(sys.argv[1]) if len(sys.argv) > 1 else today()
 day_str = f"{day:02}"
