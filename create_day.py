@@ -11,18 +11,20 @@ from base import solutions_dir, advent_of_code_base_url, year, day, day_str
 if (not os.path.exists(solutions_dir)):
     os.mkdir(solutions_dir)
 
+
 def get_day_url(day: int) -> str:
     return f"{advent_of_code_base_url}/{year}/day/{day}"
+
 
 url = get_day_url(day)
 
 response = requests.get(url)
 
-if(not response or (len(sys.argv) > 1 and day_str in os.listdir(solutions_dir))):
+if (not response or (len(sys.argv) > 1 and day_str in os.listdir(solutions_dir))):
     print('\033[1m' + "You're all up to date.")
     exit(0)
 
-shutil.copytree('day_x_template', os.path.join(solutions_dir, day_str))
+shutil.copytree('template', os.path.join(solutions_dir, day_str))
 main_py_dir = os.path.join(solutions_dir, day_str, 'main.py')
 os.chmod(main_py_dir, os.stat(main_py_dir).st_mode | stat.S_IEXEC)
 
