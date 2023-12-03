@@ -27,7 +27,12 @@ jobs:
       - name: Run the update_readme.py
         run: python3 update_readme.py
 
+      - name: Check for changes
+        id: git-check
+        run: echo ::set-output name=changed::$(git status --porcelain)
+
       - name: Add, commit and push
         uses: maxgfr/github-commit-push-file@main
+        if: steps.git-check.outputs.changed == '1'
         with:
           commit_name: "Automatically updated README"
