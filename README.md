@@ -4,3 +4,4 @@
 
 - [Day 1: Calorie Counting](./solutions/day1)
 - [Day 2: Cube Conundrum](./solutions/02)
+- [Day 3: Gear Ratios](./solutions/03)
