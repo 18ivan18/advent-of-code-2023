@@ -31,7 +31,7 @@ def get_answer(day: int, level: int):
         print(f"Error: Solution script for day {day} not found.")
 
     # Execute the Python script using subprocess
-    command = [f"{path}/bin/run.sh", f"-d{path}/{script_path}"]
+    command = [f"{path}/run.sh", f"-d{path}/{script_path}"]
     process = subprocess.Popen(
         command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     # Wait for the process to complete
@@ -57,6 +57,3 @@ class bcolors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
-
-
-print(get_answer(day, level))
