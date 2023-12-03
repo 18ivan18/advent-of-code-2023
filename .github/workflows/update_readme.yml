@@ -25,7 +25,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run the update_readme.py
-        run: python3 update_readme.py
+        run: python3 bin/update_readme.py
 
       - name: Check for changes
         id: git-check
