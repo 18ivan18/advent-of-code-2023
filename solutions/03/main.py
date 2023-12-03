@@ -9,8 +9,9 @@ adjasents = defaultdict(list)
 def isAdjasent(mat, x: int, y: int):
     for i in range(-1, 2):
         for j in range(-1, 2):
-            if x+i >= 0 and x+i < len(mat) and y+j >= 0 and y+j < len(mat[0]) and mat[x+i][y+j] != '.' and not mat[x+i][y+j].isdigit():
-                return True, (x+i, y+j) if mat[x+i][y+j] == '*' else None
+            dx, dy = x+i, y+j
+            if dx >= 0 and dx < len(mat) and dy >= 0 and dy < len(mat[0]) and mat[dx][dy] != '.' and not mat[dx][dy].isdigit():
+                return True, (dx, dy) if mat[dx][dy] == '*' else None
     return False, None
 
 
@@ -19,7 +20,7 @@ def solve() -> None:
     result = 0
     for i, x in enumerate(input):
         num, include, last_coords = 0, False, None
-        for j, y in enumerate(x):
+        for j, y in enumerate(x + '.'):
             if y.isdigit():
                 num = num*10+int(y)
                 if not include:
@@ -32,9 +33,6 @@ def solve() -> None:
                     result += num
                     adjasents[last_coords].append(num)
                 num, include = 0, False
-        if include:
-            result += num
-            adjasents[last_coords].append(num)
 
     print(result)
     print(sum([x[0]*x[1] if len(x) == 2 else 0 for x in adjasents.values()]))
