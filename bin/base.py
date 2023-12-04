@@ -1,9 +1,11 @@
 import json
+from pathlib import Path
 import os
 import sys
 
 advent_of_code_base_url = 'https://adventofcode.com'
-solutions_dir = '../solutions'
+path = Path(__file__).parents[1]
+solutions_dir = os.path.join(path, 'solutions')
 
 
 def today() -> int:
@@ -12,9 +14,10 @@ def today() -> int:
     return sorted(days)[-1]
 
 
-path = os.path.dirname(__file__)
-env = json.load(open('../.env' if os.path.exists(
-    '../.env') else '../.env.sample'))
+env_path = os.path.join(path, '.env')
+env_sample_path = os.path.join(path, '.env.sample')
+env = json.load(open(env_path if os.path.exists(
+    env_path) else env_sample_path))
 session_cookie = env['session']
 year = env['year']
 day = int(sys.argv[1]) if len(sys.argv) > 1 else today()
