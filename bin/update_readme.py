@@ -9,6 +9,6 @@ with open(os.path.join(solutions_dir, day_str, 'README.md')) as f:
 with open('README.md', 'r+') as readme:
     input = readme.read()
     if problem_name not in input:
-        readme.write(f"- [{problem_name}](./{solutions_dir}/{day_str})\n")
+        readme.write(f"- [{problem_name}](./solutions/{day_str})\n")
     else:
         print(f"{problem_name} already added to README.md")
