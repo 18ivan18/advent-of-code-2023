@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
 
 import requests
-from base import bcolors, get_answer, session_cookie, advent_of_code_base_url, year, day, level
+from base import bcolors, session_cookie, advent_of_code_base_url, year, day, level
+from get_answer import get_answer
 
 # Submit the solution
+answer = get_answer(day, level)
 url = f'{advent_of_code_base_url}/{year}/day/{day}/answer'
-data = {'level': level, 'answer': get_answer(day, level)}
+data = {'level': level, 'answer': answer}
 
 headers = {'cookie': f'session={session_cookie}'}
 
-print(f"Submitting{day=} {level=}")
+print(f"Submitting {day=} {level=} {answer=}")
 response = requests.post(url, data=data, headers=headers, allow_redirects=True)
 
 if response.text.find("Did you already complete it") != -1:

@@ -25,7 +25,7 @@ if (not response or (len(sys.argv) > 1 and next_day_str in os.listdir(solutions_
     print('\033[1m' + "You're all up to date.")
     exit(0)
 
-shutil.copytree('template', os.path.join(solutions_dir, next_day_str))
+shutil.copytree('../template', os.path.join(solutions_dir, next_day_str))
 main_py_dir = os.path.join(solutions_dir, next_day_str, 'main.py')
 os.chmod(main_py_dir, os.stat(main_py_dir).st_mode | stat.S_IEXEC)
 
