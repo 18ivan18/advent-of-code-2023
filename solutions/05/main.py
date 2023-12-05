@@ -21,16 +21,17 @@ def solve() -> None:
     maps: list[list[list[int]]] = []
     for x in input[1:]:
         maps.append(create_map(x))
-    # a = list(map(lambda seed: reduce(lambda prev,
-    #                                  m: m[prev] if prev in m else prev, maps, seed), seeds))
-    # print(min(a))
     res = float('inf')
     for seed in seeds:
-        s = seed
+        min_seed = seed
         for m in maps:
-            # TODO:
-            pass
-        res = min(res, s)
+            for line in m:
+                # destination start range, source range, range length 
+                s, sr, rl = line
+                if sr + rl - 1 >= min_seed and sr <= min_seed:
+                    min_seed = min_seed - sr + s
+                    break
+        res = min(res, min_seed)
     print(res)
 
 

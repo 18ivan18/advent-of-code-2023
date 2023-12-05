@@ -7,7 +7,7 @@ import subprocess
 import os
 
 
-def get_answer(day: int, level: int, input: str):
+def get_answer(day: int, level: int, input: str = 'input.txt'):
     # Assuming your Python script is in the 'solutions' directory and follows a naming convention like 'day_01.py'
     script_path = os.path.join(solutions_dir, f"{day:02}")
 
