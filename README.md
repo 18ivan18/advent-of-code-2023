@@ -6,3 +6,4 @@
 - [Day 2: Cube Conundrum](./solutions/02)
 - [Day 3: Gear Ratios](./solutions/03)
 - [Day 4: Scratchcards](./solutions/04)
+- [Day 5: If You Give A Seed A Fertilizer](./solutions/05)
