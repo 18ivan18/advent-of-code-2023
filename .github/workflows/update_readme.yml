@@ -29,16 +29,10 @@ jobs:
 
       - name: Check for changes
         id: git-check
-        run: |
-          changes=$(git diff --exit-code)
-          if [[ -n "$changes" ]]; then
-            echo "::set-output name=changed::1"
-          else
-            echo "::set-output name=changed::0"
-          fi
+        run: echo ::set-output name=changed::$(git status --porcelain)
 
       - name: Add, commit and push
         uses: maxgfr/github-commit-push-file@main
-        if: steps.git-check.outputs.changed == '1'
+        if: steps.git-check.outputs.changed == ' M README.md'
         with:
           commit_name: "Automatically updated README"
