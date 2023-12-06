@@ -3,40 +3,32 @@
 from sys import stdin
 
 
-def create_map(x):
-    map_values = x.splitlines()[1:]
-    m = []
-    for x in map_values:
-        mapped = list(map(int, x.split()))
-        m.append(mapped)
+def create_map(line):
+    return [[int(y) for y in x.split()] for x in line.splitlines()[1:]]
 
-    return m
 
 def to_pairs(l):
-    out = []
-    for i in range(0, len(l), 2):
-        out.append((l[i], l[i+1]))
-    return out
+   return list(zip(l[::2], l[1::2]))
 
+def trace(x, maps):
+  for m in maps:
+    # destination start range, source range, range length 
+    for s, sr, rl in m:
+        if sr + rl - 1 >= x and sr <= x:
+            x = x - sr + s
+            break
+  return x
 
 def solve():
     input = stdin.read().split('\n\n')
-    seeds = to_pairs(list(map(int, input[0].split(': ')[1].split())))
-    maps = []
-    for x in input[1:]:
-        maps.append(create_map(x))
+    seeds = list(map(int, input[0].split(': ')[1].split()))
+    maps = [create_map(x) for x in input[1:]]
+    print(min(trace(x, maps) for x in seeds))
+
     res = float('inf')
-    for start, length in seeds:
-        for seed in range(start, start + length):
-            min_seed = seed
-            for m in maps:
-                for line in m:
-                    # destination start range, source range, range length 
-                    s, sr, rl = line
-                    if sr + rl - 1 >= min_seed and sr <= min_seed:
-                        min_seed = min_seed - sr + s
-                        break
-            res = min(res, min_seed)
+    for start, length in to_pairs(seeds):
+        for x in range(start, start + length):
+            res=min(res,trace(x, maps))
     print(res)
 
 
