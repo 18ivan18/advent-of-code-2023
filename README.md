@@ -8,3 +8,4 @@
 - [Day 4: Scratchcards](./solutions/04)
 - [Day 5: If You Give A Seed A Fertilizer](./solutions/05)
 - [Day 6: Wait For It](./solutions/06)
+- [Day 7: Camel Cards](./solutions/07)
