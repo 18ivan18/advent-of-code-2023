@@ -23,5 +23,5 @@ if response.text.find("not the right answer") != -1:
 if response.text.find("too recently") != -1:
     print(f"{bcolors.FAIL}Submitted too recently.{bcolors.ENDC}")
 
-if response.text.find("right answer") != -1:
+if response.text.find("That's the right answer") != -1:
     print(f"{bcolors.OKGREEN}Correct answer. Getting part 2.{bcolors.ENDC}")
