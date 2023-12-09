@@ -10,3 +10,4 @@
 - [Day 6: Wait For It](./solutions/06)
 - [Day 7: Camel Cards](./solutions/07)
 - [Day 8: Haunted Wasteland](./solutions/08)
+- [Day 9: Mirage Maintenance](./solutions/09)
