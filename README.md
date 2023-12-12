@@ -13,3 +13,4 @@
 - [Day 9: Mirage Maintenance](./solutions/09)
 - [Day 10: Pipe Maze](./solutions/10)
 - [Day 11: Cosmic Expansion](./solutions/11)
+- [Day 12: Hot Springs](./solutions/12)
