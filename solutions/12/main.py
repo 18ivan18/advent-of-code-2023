@@ -1,37 +1,40 @@
 #!/usr/bin/env python3
 
 from sys import stdin
-import re
-
-pattern = r'#+'
+from functools import cache
 
 
-def brute_force(s: list[str], i: int, groups: list[int]):
-    if len(s) == i:
-        final = ''.join(s)
-        matches = list(map(len, re.findall(pattern, final)))
-        return 1 if matches == groups else 0
-    if s[i] == '?':
-        original = s
-        s = original[0:i] + '.' + original[i+1:]
-        not_damaged = brute_force(s, i + 1, groups)
-        s = original[0:i] + '#' + original[i+1:]
-        damaged = brute_force(s, i+1, groups)
-        s = original
-        return damaged + not_damaged
-    return brute_force(s, i+1, groups)
+@cache
+def brute_force(s: str, groups: tuple):
+    if not s:
+        return len(groups) == 0
+    if not groups:
+        return s.find('#') == -1
+    if len(s) < sum(groups) + len(groups) - 1:
+        return 0
 
+    if s[0] == '?':
+        return brute_force('#' + s[1:], groups) + brute_force('.' + s[1:], groups)
 
-def arrangements(line: str):
-    springs, groups = line.split()
-    groups = [int(x) for x in groups.split(',')]
+    if s[0] == '#':
+        group, *rest = groups
+        for x in range(group):
+            if s[x] == '.':
+                return 0
+        if group < len(s) and s[group] == '#':
+            return 0
+        return brute_force(s[group + 1:], tuple(rest))
 
-    return brute_force(springs, 0, groups)
+    return brute_force(s[1:], groups)
 
 
 def solve() -> None:
-    input = stdin.read().splitlines()
-    print(sum(map(arrangements, input)))
+    input = [l.split() for l in stdin.read().splitlines()]
+    input = [(springs, tuple(map(int, groups.split(','))))
+             for springs, groups in input]
+    print(sum(brute_force(springs + ".", groups) for springs, groups in input))
+    print(sum(brute_force("?".join([group] * 5), sizes * 5)
+          for group, sizes in input))
 
 
 if __name__ == '__main__':
