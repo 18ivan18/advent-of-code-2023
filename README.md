@@ -12,3 +12,4 @@
 - [Day 8: Haunted Wasteland](./solutions/08)
 - [Day 9: Mirage Maintenance](./solutions/09)
 - [Day 10: Pipe Maze](./solutions/10)
+- [Day 11: Cosmic Expansion](./solutions/11)
