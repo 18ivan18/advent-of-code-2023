@@ -43,29 +43,23 @@ def find_mirror_index(pattern: list[list[str]], threshold: int = None) -> int | 
     return None
 
 
-def solve() -> None:
-    input = stdin.read().split('\n\n')
+def sum_of_mirror_indexes(s: str, threshold: int = None):
     notes = 0
-    for pattern in input:
+    for pattern in s:
         lines = [list(x) for x in pattern.splitlines()]
-        by_row = find_mirror_index(lines)
+        by_row = find_mirror_index(lines, threshold)
         if by_row:
             notes += by_row*100
             continue
-        by_column = find_mirror_index(transpose(lines))
+        by_column = find_mirror_index(transpose(lines), threshold)
         notes += by_column
-    print(notes)
+    return notes
 
-    notes1 = 0
-    for pattern in input:
-        lines = [list(x) for x in pattern.splitlines()]
-        by_row = find_mirror_index(lines, 1)
-        if by_row:
-            notes1 += by_row*100
-            continue
-        by_column = find_mirror_index(transpose(lines), 1)
-        notes1 += by_column
-    print(notes1)
+
+def solve() -> None:
+    input = stdin.read().split('\n\n')
+    print(sum_of_mirror_indexes(input))
+    print(sum_of_mirror_indexes(input, 1))
 
 
 if __name__ == '__main__':
