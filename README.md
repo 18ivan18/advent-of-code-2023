@@ -14,3 +14,4 @@
 - [Day 10: Pipe Maze](./solutions/10)
 - [Day 11: Cosmic Expansion](./solutions/11)
 - [Day 12: Hot Springs](./solutions/12)
+- [Day 13: Point of Incidence](./solutions/13)
