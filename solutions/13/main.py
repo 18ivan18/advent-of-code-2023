@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-from math import ceil
 from sys import stdin
 
 
@@ -12,18 +11,34 @@ def transpose(X: list[list[str]]):
 # 2 -> (0,5),(1,4),(2,3)
 
 
-def find_mirror_index(pattern: list[list[str]]) -> int | None:
+def diff(x: list[str], y: list[str]):
+    d = 0
+    for a, b in zip(x, y):
+        if a != b:
+            d += 1
+    return d
+
+
+def find_mirror_index(pattern: list[list[str]], threshold: int = None) -> int | None:
     sz = len(pattern)
     for i in range(sz - 1):
         mirror = True
         end = 2*(i+1)
         start = 0 if end < sz else end - sz
         end = end if end < sz else sz
+        already_saw_smudge = False
         for j in range(start, (start + end + 1) // 2):
-            if pattern[j] != pattern[end - j + start - 1]:
+            d = diff(pattern[j], pattern[end - j + start - 1])
+            if threshold and d == threshold and not already_saw_smudge:
+                already_saw_smudge = True
+                continue
+            if threshold and d == threshold and already_saw_smudge:
                 mirror = False
                 break
-        if mirror:
+            if d > (threshold or 0):
+                mirror = False
+                break
+        if mirror and (not threshold or already_saw_smudge):
             return i + 1  # ith row means i+1
     return None
 
@@ -40,6 +55,17 @@ def solve() -> None:
         by_column = find_mirror_index(transpose(lines))
         notes += by_column
     print(notes)
+
+    notes1 = 0
+    for pattern in input:
+        lines = [list(x) for x in pattern.splitlines()]
+        by_row = find_mirror_index(lines, 1)
+        if by_row:
+            notes1 += by_row*100
+            continue
+        by_column = find_mirror_index(transpose(lines), 1)
+        notes1 += by_column
+    print(notes1)
 
 
 if __name__ == '__main__':
