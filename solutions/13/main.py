@@ -22,23 +22,13 @@ def diff(x: list[str], y: list[str]):
 def find_mirror_index(pattern: list[list[str]], threshold: int = None) -> int | None:
     sz = len(pattern)
     for i in range(sz - 1):
-        mirror = True
         end = 2*(i+1)
         start = 0 if end < sz else end - sz
         end = end if end < sz else sz
-        already_saw_smudge = False
+        diff_sum = 0
         for j in range(start, (start + end + 1) // 2):
-            d = diff(pattern[j], pattern[end - j + start - 1])
-            if threshold and d == threshold and not already_saw_smudge:
-                already_saw_smudge = True
-                continue
-            if threshold and d == threshold and already_saw_smudge:
-                mirror = False
-                break
-            if d > (threshold or 0):
-                mirror = False
-                break
-        if mirror and (not threshold or already_saw_smudge):
+            diff_sum += diff(pattern[j], pattern[end - j + start - 1])
+        if diff_sum == threshold:
             return i + 1  # ith row means i+1
     return None
 
@@ -58,7 +48,7 @@ def sum_of_mirror_indexes(s: str, threshold: int = None):
 
 def solve() -> None:
     input = stdin.read().split('\n\n')
-    print(sum_of_mirror_indexes(input))
+    print(sum_of_mirror_indexes(input, 0))
     print(sum_of_mirror_indexes(input, 1))
 
 
