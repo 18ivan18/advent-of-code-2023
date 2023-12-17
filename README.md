@@ -16,3 +16,4 @@
 - [Day 12: Hot Springs](./solutions/12)
 - [Day 13: Point of Incidence](./solutions/13)
 - [Day 14: Parabolic Reflector Dish](./solutions/14)
+- [Day 15: Lens Library](./solutions/15)
