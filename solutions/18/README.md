@@ -88,3 +88,5 @@ So, in the above example, the hexadecimal codes can be converted into the true i
 Digging out this loop and its interior produces a lagoon that can hold an impressive 952408144115 cubic meters of lava.
 
 Convert the hexadecimal color codes into the correct instructions; if the Elves follow this new dig plan, how many cubic meters of lava could the lagoon hold?
+
+Your puzzle answer was `54058824661845`.
