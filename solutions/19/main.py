@@ -50,8 +50,15 @@ def is_accepted(example: Example, starting_rule: str = begin):
     return rule == 'A'
 
 
-def fit_range(example: Example, starting_rule: str = begin):
-    pass
+def fit_range(starting_rule: str = begin):
+    min_x, min_m, min_a, min_s, max_x, max_m, max_a, max_s = 1, 1, 1, 1, 4000, 4000, 4000, 4000
+
+    to_visit = [starting_rule]
+    # do a dfs to find all accepted ones and then apply rules
+    while to_visit:
+        rule = to_visit.pop(0)
+
+    return (max_x - min_x)*(max_m - min_m)*(max_a - min_a)*(max_s - min_s)
 
 
 def solve() -> None:
@@ -60,7 +67,7 @@ def solve() -> None:
     examples = [Example(x) for x in examples.splitlines()]
     print(sum([example.value()
           for example in examples if is_accepted(example)]))
-    print(sum(map(fit_range, examples)))
+    print(fit_range())
 
 
 if __name__ == '__main__':
