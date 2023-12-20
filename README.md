@@ -21,3 +21,4 @@
 - [Day 17: Clumsy Crucible](./solutions/17)
 - [Day 18: Lavaduct Lagoon](./solutions/18)
 - [Day 19: Aplenty](./solutions/19)
+- [Day 20: Pulse Propagation](./solutions/20)
