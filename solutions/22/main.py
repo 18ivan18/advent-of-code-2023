@@ -46,12 +46,8 @@ class Brick():
         start, end = str.split('~')
         s_x, s_y, s_z = start.split(',')
         e_x, e_y, e_z = end.split(',')
-        self.s_x = int(s_x)
-        self.s_y = int(s_y)
-        self.e_x = int(e_x)
-        self.e_y = int(e_y)
-        self.s_z = int(s_z)
-        self.e_z = int(e_z)
+        self.s_x, self.s_y, self.s_z = int(s_x), int(s_y), int(s_z)
+        self.e_x, self.e_y, self.e_z = int(e_x), int(e_y), int(e_z)
         self.index = Index()
 
     def __str__(self) -> str:
@@ -108,8 +104,7 @@ def solve() -> None:
     input = stdin.read().splitlines()
     bricks = [Brick(x) for x in input]
     bricks.sort(key=lambda x: x.s_z)
-    placed = set()
-    tile_to_brick = dict()
+    placed, tile_to_brick = set(), dict()
     for brick in bricks:
         for x in range(brick.s_x, brick.e_x + 1):
             for y in range(brick.s_y, brick.e_y + 1):
@@ -129,7 +124,6 @@ def solve() -> None:
                 if (x, brick.s_y, brick.s_z - 1) in placed:
                     supported_by[brick.index.name].add(
                         tile_to_brick[(x, brick.s_y, brick.s_z - 1)])
-
             continue
         if brick.s_y != brick.e_y:
             for y in range(brick.s_y, brick.e_y+1):
@@ -143,16 +137,16 @@ def solve() -> None:
 
     can_be_removed = set(map(lambda brick: brick.index.name, bricks))
     for brick_name in supported_by:
-        if len(supported_by[brick_name]) == 1:
-            for name in supported_by[brick_name]:
-                if name in can_be_removed:
-                    can_be_removed.remove(name)
+        if len(supported_by[brick_name]) != 1:
+            continue
+        for name in supported_by[brick_name]:
+            if name in can_be_removed:
+                can_be_removed.remove(name)
     print(len(can_be_removed))
 
     total_score = 0
     for brick in bricks:
         if brick.index.name not in can_be_removed:
-            # print(brick.index.name)
             bricks.remove(brick)
             b = deepcopy(bricks)
             p = deepcopy(placed)
@@ -165,7 +159,6 @@ def solve() -> None:
 
             total_score += settle_bricks(b, p, t)
             bricks.insert(0, brick)
-            # print(total_score)
     print(total_score)
 
 
