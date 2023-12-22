@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from collections import defaultdict
+from copy import deepcopy
 from sys import stdin
 
 
@@ -69,6 +70,40 @@ def move_down(brick: Brick, placed: set, tile_to_brick: dict):
     brick.e_z -= 1
 
 
+def settle_bricks(bricks: list[Brick], placed: set, tile_to_brick: dict):
+    finished = False
+    fallen = set()
+    while not finished:
+        finished = True
+        for brick in bricks:
+            if brick.s_z == 1:
+                continue
+            if brick.s_x != brick.e_x:
+                for x in range(brick.s_x, brick.e_x+1):
+                    if (x, brick.s_y, brick.s_z - 1) in placed:
+                        break
+                else:
+                    move_down(brick, placed, tile_to_brick)
+                    fallen.add(brick.index.name)
+                    finished = False
+                continue
+
+            if brick.s_y != brick.e_y:
+                for y in range(brick.s_y, brick.e_y+1):
+                    if (brick.s_x, y, brick.s_z - 1) in placed:
+                        break
+                else:
+                    move_down(brick, placed, tile_to_brick)
+                    fallen.add(brick.index.name)
+                    finished = False
+                continue
+            if (brick.s_x, brick.s_y, brick.s_z - 1) not in placed:
+                move_down(brick, placed, tile_to_brick)
+                fallen.add(brick.index.name)
+                finished = False
+    return len(fallen)
+
+
 def solve() -> None:
     input = stdin.read().splitlines()
     bricks = [Brick(x) for x in input]
@@ -82,32 +117,7 @@ def solve() -> None:
                     placed.add((x, y, z))
                     tile_to_brick[(x, y, z)] = brick.index.name
 
-    finished = False
-    while not finished:
-        finished = True
-        for brick in bricks:
-            if brick.s_z == 1:
-                continue
-            if brick.s_x != brick.e_x:
-                for x in range(brick.s_x, brick.e_x+1):
-                    if (x, brick.s_y, brick.s_z - 1) in placed:
-                        break
-                else:
-                    move_down(brick, placed, tile_to_brick)
-                    finished = False
-                continue
-
-            if brick.s_y != brick.e_y:
-                for y in range(brick.s_y, brick.e_y+1):
-                    if (brick.s_x, y, brick.s_z - 1) in placed:
-                        break
-                else:
-                    move_down(brick, placed, tile_to_brick)
-                    finished = False
-                continue
-            if (brick.s_x, brick.s_y, brick.s_z - 1) not in placed:
-                move_down(brick, placed, tile_to_brick)
-                finished = False
+    settle_bricks(bricks, placed, tile_to_brick)
 
     supported_by = defaultdict(set)
     for brick in bricks:
@@ -119,6 +129,7 @@ def solve() -> None:
                 if (x, brick.s_y, brick.s_z - 1) in placed:
                     supported_by[brick.index.name].add(
                         tile_to_brick[(x, brick.s_y, brick.s_z - 1)])
+
             continue
         if brick.s_y != brick.e_y:
             for y in range(brick.s_y, brick.e_y+1):
@@ -136,8 +147,26 @@ def solve() -> None:
             for name in supported_by[brick_name]:
                 if name in can_be_removed:
                     can_be_removed.remove(name)
-    # print(can_be_removed)
     print(len(can_be_removed))
+
+    total_score = 0
+    for brick in bricks:
+        if brick.index.name not in can_be_removed:
+            # print(brick.index.name)
+            bricks.remove(brick)
+            b = deepcopy(bricks)
+            p = deepcopy(placed)
+            t = deepcopy(tile_to_brick)
+            for x in range(brick.s_x, brick.e_x + 1):
+                for y in range(brick.s_y, brick.e_y + 1):
+                    for z in range(brick.s_z, brick.e_z + 1):
+                        p.remove((x, y, z))
+                        del t[(x, y, z)]
+
+            total_score += settle_bricks(b, p, t)
+            bricks.insert(0, brick)
+            # print(total_score)
+    print(total_score)
 
 
 if __name__ == '__main__':
