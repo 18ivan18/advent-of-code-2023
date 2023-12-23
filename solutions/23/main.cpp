@@ -14,7 +14,7 @@ int end_x, end_y;
 
 int longest_path = 0;
 
-bool is_valid(int row, int col, int direction)
+bool is_valid(int row, int col, Direction direction)
 {
     switch (input[row][col])
     {
@@ -46,6 +46,7 @@ void find_longest_path(int row, int col, int len)
         return;
     }
 
+    char prev = input[row][col];
     input[row][col] = '#';
 
     if (is_valid(row - 1, col, UP))
@@ -68,7 +69,7 @@ void find_longest_path(int row, int col, int len)
         find_longest_path(row, col - 1, len + 1);
     }
 
-    input[row][col] = '.';
+    input[row][col] = prev;
 }
 
 int main()
@@ -80,14 +81,7 @@ int main()
     {
         for (int i = 0; i < line.size(); i++)
         {
-            if (line[i] == '#')
-            {
-                input[rows][i] = line[i];
-            }
-            else
-            {
-                input[rows][i] = '.';
-            }
+            input[rows][i] = line[i];
 
             cols = i + 1;
         }
@@ -99,12 +93,23 @@ int main()
     end_x = rows - 1;
     end_y = cols - 2;
 
-    printf("start: %d %d %c\n", start_x, start_y, input[start_x][start_y]);
-    printf("end: %d %d %c\n", end_x, end_y, input[end_x][end_y]);
     input[start_x][start_y] = '#';
 
     // this way we don't have to check for going out of bounds
     find_longest_path(start_x + 1, start_y, 1);
+    std::cout << longest_path << '\n';
 
-    printf("%d\n", longest_path);
+    for (size_t i = 0; i < rows; i++)
+    {
+        for (size_t j = 0; j < cols; j++)
+        {
+            if (input[i][j] != '#')
+            {
+                input[i][j] = '.';
+            }
+        }
+    }
+
+    find_longest_path(start_x + 1, start_y, 1);
+    std::cout << longest_path << '\n';
 }
