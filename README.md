@@ -24,3 +24,4 @@
 - [Day 20: Pulse Propagation](./solutions/20)
 - [Day 21: Step Counter](./solutions/21)
 - [Day 22: Sand Slabs](./solutions/22)
+- [Day 23: A Long Walk](./solutions/23)
