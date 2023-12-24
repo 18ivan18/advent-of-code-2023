@@ -105,3 +105,5 @@ After 1 nanosecond, the rock has exactly the same position as one of the hailsto
 So, at time 0, the rock needs to be at X position 24, Y position 13, and Z position 10. Adding these three coordinates together produces 47. (Don't add any coordinates from the rock's velocity.)
 
 Determine the exact position and velocity the rock needs to have at time 0 so that it perfectly collides with every hailstone. What do you get if you add up the X, Y, and Z coordinates of that initial position?
+
+Your puzzle answer was `580043851566574`.
