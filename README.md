@@ -26,3 +26,4 @@
 - [Day 22: Sand Slabs](./solutions/22)
 - [Day 23: A Long Walk](./solutions/23)
 - [Day 24: Never Tell Me The Odds](./solutions/24)
+- [Day 25: Snowverload](./solutions/25)
